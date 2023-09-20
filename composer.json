@@ -1,0 +1,13 @@
+{
+    "name": "prgfx/neos-linkeditor",
+    "type": "neos-package",
+    "keywords": ["neoscms", "neos", "linkeditor", "querystring", "query arguments"],
+    "require": {
+        "neos/neos-ui": "^8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Prgfx\\Neos\\LinkEditor\\": "Classes"
+        }
+    }
+}

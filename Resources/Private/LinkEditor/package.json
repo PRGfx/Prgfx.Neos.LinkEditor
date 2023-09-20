@@ -1,0 +1,19 @@
+{
+    "name": "@prgfx/neos-linkeditor",
+    "private": true,
+    "scripts": {
+        "build": "node build.js",
+        "watch": "node build.js --watch"
+    },
+    "devDependencies": {
+        "@types/react": "^17.0.6",
+        "@neos-project/neos-ui-extensibility": "~8.3.0",
+        "@neos-project/react-ui-components": "~8.3.0",
+        "esbuild": "~0.17.18"
+    },
+    "peerDependencies": {
+        "classnames": "^2.3.1",
+        "react": "^17.0.2",
+        "react-redux": "^7.2.4"
+    }
+}

@@ -1,0 +1,7 @@
+Neos:
+  Neos:
+    Ui:
+      resources:
+        javascript:
+          'Prgx.Neos.LinkEditor':
+            resource: 'resource://Prgfx.Neos.LinkEditor/Public/Plugin/LinkEditor/Plugin.js'
