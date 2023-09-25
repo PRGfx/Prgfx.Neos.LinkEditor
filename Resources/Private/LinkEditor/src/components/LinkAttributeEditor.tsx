@@ -1,8 +1,13 @@
-import React, { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
-import { TextInput } from '@neos-project/react-ui-components';
-import { AttributeOption, getAttributeOptions } from '../util/attributeOptions';
-import { LinkAttributeLabel } from './LinkAttributeLabel';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+    AttributeOption,
+    getAttributeGroups,
+    getAttributeOptions,
+    groupOptions,
+} from '../util/attributeOptions';
 import { fromEntries } from '../util/objects';
+import { LinkAttributeGroup } from './LinkAttributeGroup';
+import { useNeos } from '../util/useNeos';
 
 type LinkAttributeEditorProps = {
     linkValue: string;
@@ -11,20 +16,24 @@ type LinkAttributeEditorProps = {
     i18nRegistry: {translate: (key: string) => string};
 }
 
-const containerStyles: CSSProperties = {
-    display: 'flex',
-    padding: 8,
-    gap: 8,
-    flexWrap: 'wrap',
-};
-
 export const LinkAttributeEditor: React.FunctionComponent<LinkAttributeEditorProps> = props => {
     const { onLinkChange } = props;
+    const { globalRegistry } = useNeos();
+
+    const availableGroups = useMemo(() => {
+        const options = globalRegistry.get('frontendConfiguration').get<{groups: unknown}>('Prgfx.Neos.LinkEditor');
+        return getAttributeGroups(options.groups);
+    }, [ globalRegistry ]);
+
     const [ attributeValues, setAttributeValues ] = useState<Record<string, string>>({});
 
     const options: AttributeOption[] = useMemo(() => {
         return getAttributeOptions(props.linkingOptions);
     }, [ props.linkingOptions ]);
+
+    const groupedOptions = useMemo(() => {
+        return groupOptions(options).filter(([ key ]) => key in availableGroups);
+    }, [ options, availableGroups ]);
 
     useEffect(() => {
         try {
@@ -59,25 +68,17 @@ export const LinkAttributeEditor: React.FunctionComponent<LinkAttributeEditorPro
     }, [ props.linkValue, onLinkChange ]);
 
     return (
-        <div style={containerStyles}>
-            {options.map((option, i) => {
-                const inputId = `link-attribute-input-${i}`;
-                return (
-                    <div key={option.attribute}>
-                        <LinkAttributeLabel
-                            option={option}
-                            inputId={inputId}
-                            i18nRegistry={props.i18nRegistry}
-                        />
-                        <TextInput
-                            id={inputId}
-                            value={attributeValues[option.attribute]}
-                            onChange={handleUpdate(option.attribute)}
-                            placeholder={props.i18nRegistry.translate(option.placeholder)}
-                        />
-                    </div>
-                );
-            })}
-        </div>
+        <>
+            {groupedOptions.map(([ group, options ]) => (
+                <LinkAttributeGroup
+                    key={group}
+                    label={availableGroups[group].label}
+                    i18nRegistry={props.i18nRegistry}
+                    options={options}
+                    onChange={handleUpdate}
+                    values={attributeValues}
+                />
+            ))}
+        </>
     );
 };

@@ -28,3 +28,27 @@ My.Package:NodeType:
                 # unset attributes or attributes without label are ignored
                 ignored_attribute: ~
 ```
+
+### Group Inputs
+In case you have multiple types of inputs, you can group them in a "meaningful" way:
+```yaml
+# ...
+   linking:
+    linkAttributes:
+      utm_campaign:
+        label: Campaign
+        group: tracking
+```
+Groups can be configured in the frontend settings:
+```yaml
+Neos:
+  Neos:
+    Ui:
+      frontendConfiguration:
+        Prgfx.Neos.LinkEditor:
+          groups:
+            tracking:
+              # supports MyPackage:Source:key translation keys as well
+              label: Tracking parameters
+```
+The default group is called `default`, in case you want to overwrite its settings.

@@ -5,3 +5,8 @@ Neos:
         javascript:
           'Prgx.Neos.LinkEditor':
             resource: 'resource://Prgfx.Neos.LinkEditor/Public/Plugin/LinkEditor/Plugin.js'
+      frontendConfiguration:
+        Prgfx.Neos.LinkEditor:
+          groups:
+            default:
+              label: Query Arguments

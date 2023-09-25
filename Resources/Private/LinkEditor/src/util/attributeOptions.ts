@@ -1,9 +1,42 @@
 export type AttributeOption = {
     attribute: string;
     label: string;
+    group: string;
     help?: string;
     placeholder?: string;
 }
+
+export type AttributeGroup = {
+    key: string;
+    label: string;
+}
+
+export const getAttributeGroups = (options: unknown): Record<string, AttributeGroup> => {
+    const result: Record<string, AttributeGroup> = {};
+
+    if (!options || typeof options !== 'object' || Array.isArray(options)) {
+        return result;
+    }
+
+    Object.entries(options).forEach(([ key, value ]) => {
+        if (!value || typeof value !== 'object' || Array.isArray(value)) {
+            return;
+        }
+
+        if (!('label' in value) || typeof value.label !== 'string') {
+            return;
+        }
+
+        result[key] = {
+            key,
+            label: value.label,
+        };
+    });
+
+    return result;
+};
+
+export const DefaultAttributeGroup = 'default';
 
 export const getAttributeOptions = (options: Record<string, unknown>): AttributeOption[] => {
     if (!('linkAttributes' in options) || !options.linkAttributes || typeof options.linkAttributes !== 'object' || Array.isArray(options.linkAttributes)) {
@@ -23,6 +56,7 @@ export const getAttributeOptions = (options: Record<string, unknown>): Attribute
             return result.push({
                 attribute,
                 label: config,
+                group: DefaultAttributeGroup,
             });
         }
 
@@ -42,13 +76,26 @@ export const getAttributeOptions = (options: Record<string, unknown>): Attribute
             ? config.placeholder
             : undefined;
 
+        const group = 'group' in config && typeof config.group === 'string'
+            ? config.group
+            : DefaultAttributeGroup;
+
         return result.push({
             attribute,
             label: config.label,
             help,
             placeholder,
+            group,
         });
     });
 
     return result;
+};
+
+export const groupOptions = (options: AttributeOption[]): [group: string, options: AttributeOption[]][] => {
+    const byGroups = options.reduce<Record<string, AttributeOption[]>>((byGroups, option) => ({
+        ...byGroups,
+        [option.group]: [ ...(byGroups[option.group] ?? []), option ],
+    }), {});
+    return Object.entries(byGroups);
 };
