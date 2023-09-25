@@ -9,6 +9,7 @@ export type AttributeOption = {
 export type AttributeGroup = {
     key: string;
     label: string;
+    collapsed?: boolean;
 }
 
 export const getAttributeGroups = (options: unknown): Record<string, AttributeGroup> => {
@@ -27,9 +28,12 @@ export const getAttributeGroups = (options: unknown): Record<string, AttributeGr
             return;
         }
 
+        const collapsed = 'collapsed' in value && value.collapsed === true;
+
         result[key] = {
             key,
             label: value.label,
+            collapsed,
         };
     });
 

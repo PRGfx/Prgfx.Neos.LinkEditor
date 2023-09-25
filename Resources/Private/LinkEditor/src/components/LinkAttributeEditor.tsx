@@ -77,6 +77,7 @@ export const LinkAttributeEditor: React.FunctionComponent<LinkAttributeEditorPro
                     options={options}
                     onChange={handleUpdate}
                     values={attributeValues}
+                    collapsed={availableGroups[group].collapsed}
                 />
             ))}
         </>
