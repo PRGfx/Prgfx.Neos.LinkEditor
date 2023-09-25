@@ -1,3 +1,5 @@
+[![Version](https://poser.pugx.org/prgfx/neos-linkeditor/version)](//packagist.org/packages/prgfx/neos-linkeditor)
+
 # Prgfx.Neos.LinkEditor
 
 Allows configuring inputs for query arguments in the link-editor.
