@@ -4,6 +4,7 @@ export type AttributeOption = {
     help?: string;
     placeholder?: string;
 }
+
 export const getAttributeOptions = (options: Record<string, unknown>): AttributeOption[] => {
     if (!('linkAttributes' in options) || !options.linkAttributes || typeof options.linkAttributes !== 'object' || Array.isArray(options.linkAttributes)) {
         return [];
@@ -50,4 +51,4 @@ export const getAttributeOptions = (options: Record<string, unknown>): Attribute
     });
 
     return result;
-}
+};

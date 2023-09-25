@@ -1,5 +1,5 @@
 import manifest from '@neos-project/neos-ui-extensibility';
-import {LinkAttributeEditor} from "./components/LinkAttributeEditor";
+import { LinkAttributeEditor } from './components/LinkAttributeEditor';
 
 manifest('Prgfx.Neos.LinkEditor:LinkEditor', {}, (globalRegistry) => {
     const containerRegistry = globalRegistry.get('containers');
@@ -18,7 +18,7 @@ manifest('Prgfx.Neos.LinkEditor:LinkEditor', {}, (globalRegistry) => {
         const newLookup = typeof oldLookup === 'string' && /^node:\/\//.test(oldLookup)
             ? oldLookup.split('?')[0]
             : oldLookup;
-        return originalResolve.call(linkLookupDataLoader, options, newLookup)
-    }
+        return originalResolve.call(linkLookupDataLoader, options, newLookup);
+    };
     linkLookupDataLoader.resolveValue = newResolve.bind(linkLookupDataLoader);
 });
