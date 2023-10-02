@@ -43,17 +43,15 @@ In case you have multiple types of inputs, you can group them in a "meaningful" 
 ```
 Groups can be configured in the frontend settings:
 ```yaml
-Neos:
+Prgfx:
   Neos:
-    Ui:
-      frontendConfiguration:
-        Prgfx.Neos.LinkEditor:
-          groups:
-            tracking:
-              # supports MyPackage:Source:key translation keys as well
-              label: Tracking parameters
-              # optional; if a value is set in that group, the group will always be expanded
-              collapsed: true
+    LinkEditor:
+      parameterGroups:
+        tracking:
+          # supports MyPackage:Source:key translation keys as well
+          label: Tracking parameters
+          # optional; if a value is set in that group, the group will always be expanded
+          collapsed: true
 ```
 The default group is called `default`, in case you want to overwrite its settings.
 

@@ -7,9 +7,7 @@ Neos:
             resource: 'resource://Prgfx.Neos.LinkEditor/Public/Plugin/LinkEditor/Plugin.js'
       frontendConfiguration:
         Prgfx.Neos.LinkEditor:
-          groups:
-            default:
-              label: Query Arguments
+          groups: "${Configuration.setting('Prgfx.Neos.LinkEditor.parameterGroups')}"
           # This package provides a custom LinkEditor which allows editing linking options. You can disable this by
           # setting the replace option to false
           linkEditor:
@@ -32,3 +30,6 @@ Prgfx:
         NodeUri: true
         UriBuilder: true
         ConvertUris: true
+      parameterGroups:
+        default:
+          label: Query Arguments
