@@ -36,6 +36,9 @@ const containerStyles = (collapsed: boolean): React.CSSProperties => ({
     flexWrap: 'wrap',
     gap: 8,
 });
+const groupStyles: React.CSSProperties = {
+    flexGrow: 1,
+};
 
 const isCollapsed = (props: LinkAttributeGroupProps): boolean =>
     props.collapsed === true && props.options.every(({ attribute }) => {
@@ -79,7 +82,7 @@ export const LinkAttributeGroup: React.FunctionComponent<LinkAttributeGroupProps
                 {props.options.map((option, i) => {
                     const inputId = `link-attribute-input-${i}`;
                     return (
-                        <div key={option.attribute}>
+                        <div key={option.attribute} style={groupStyles}>
                             <LinkAttributeLabel
                                 option={option}
                                 inputId={inputId}
