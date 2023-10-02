@@ -10,3 +10,14 @@ Neos:
           groups:
             default:
               label: Query Arguments
+    fusion:
+      autoInclude:
+        Prgfx.Neos.LinkEditor: true
+
+Prgfx:
+  Neos:
+    LinkEditor:
+      augmentLinks:
+        NodeUri: true
+        UriBuilder: true
+        ConvertUris: true

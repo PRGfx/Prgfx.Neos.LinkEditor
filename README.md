@@ -56,3 +56,26 @@ Neos:
               collapsed: true
 ```
 The default group is called `default`, in case you want to overwrite its settings.
+
+## Augment Links
+For similar use-cases you may want to append additional arguments to links in certain contexts, e.g. set a "utm_source" argument in your email or RSS rendering.
+For this you can overwrite the `Prgfx.Neos.LinkEditor:AdditionalArguments` fusion prototype:
+```neosfusion
+prototype(My.Package:RssItem) {
+    prototype(Prgfx.Neos.LinkEditor:AdditionalArguments) {
+        utm_source = 'rss'
+    }
+}
+```
+
+The attributes will be appended to links going through `Neos.Fusion:UriBuilder`, `Neos.Neos:NodeUri` and `Neos.Neos:ConvertUris`.
+You can disable this behavior with the respective settings:
+```yaml
+Prgfx:
+  Neos:
+    LinkEditor:
+      augmentLinks:
+        NodeUri: true
+        UriBuilder: true
+        ConvertUris: true
+```

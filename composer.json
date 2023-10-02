@@ -5,6 +5,7 @@
     "description": "Neos Link-Editor extension for editing query arguments for example to edit tracking parameters.",
     "license": "GPL-3.0-or-later",
     "require": {
+        "neos/neos": "^8",
         "neos/neos-ui": "^8"
     },
     "autoload": {

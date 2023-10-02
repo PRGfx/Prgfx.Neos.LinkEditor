@@ -1,0 +1,47 @@
+prototype(Prgfx.Neos.LinkEditor:AdditionalArguments) < prototype(Neos.Fusion:DataStructure)
+
+prototype(Neos.Neos:NodeUri) {
+    @process.addAdditionalArguments = Prgfx.Neos.LinkEditor:AppendAdditionalArguments {
+        @if.enabled = ${Configuration.setting('Prgfx.Neos.LinkEditor.augmentLinks.NodeUri')}
+    }
+}
+prototype(Neos.Fusion:UriBuilder) {
+    @process.addAdditionalArguments = Prgfx.Neos.LinkEditor:AppendAdditionalArguments {
+        @if.enabled = ${Configuration.setting('Prgfx.Neos.LinkEditor.augmentLinks.UriBuilder')}
+    }
+}
+prototype(Neos.Neos:ConvertUris) {
+    value.@process.addAdditionalArguments = Neos.Fusion:Value {
+        @if.enabled = ${Configuration.setting('Prgfx.Neos.LinkEditor.augmentLinks.ConvertUris')}
+
+        arguments = Prgfx.Neos.LinkEditor:AdditionalArguments
+
+        queryString = ${this.arguments}
+        queryString.@process.toString = Prgfx.Neos.LinkEditor:QueryString
+
+        internalUris = ${String.pregMatchAll(value, '/"((node|asset):\/\/[^"]+)"/')}
+
+        value = ${this.queryString ? Array.reduce(this.internalUris[0] || [], (carry, uri, i) => String.replace(carry, uri, '"' + this.internalUris[1][i] + (String.indexOf(uri, '?') >= 0 ? '&' : '?') + this.queryString + '"'), value) : value}
+    }
+}
+
+
+prototype(Prgfx.Neos.LinkEditor:AppendAdditionalArguments) < prototype(Neos.Fusion:Value) {
+    arguments = Prgfx.Neos.LinkEditor:AdditionalArguments
+
+    queryString = ${this.arguments}
+    queryString.@process.toString = Prgfx.Neos.LinkEditor:QueryString
+
+    value = ${value + (this.queryString ? ((String.indexOf(value, '?') >= 0 ? '&' : '?') + this.queryString) : '')}
+}
+
+prototype(Prgfx.Neos.LinkEditor:QueryString) < prototype(Neos.Fusion:Value) {
+    value = ${value}
+    value.@process.toString = Neos.Fusion:Loop {
+        items = ${value}
+        @glue = '&'
+        itemName = 'value'
+        itemKey = 'key'
+        itemRenderer = ${key + '=' + String.rawUrlEncode(value)}
+    }
+}
