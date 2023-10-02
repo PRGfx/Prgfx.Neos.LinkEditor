@@ -3,14 +3,15 @@ import { useContext } from 'react';
 // @ts-ignore
 import { NeosContext } from '@neos-project/neos-ui-decorators';
 
-type Registry = {
+export type Registry = {
     get<T = Registry>(key: string): T;
+    set<T = unknown>(key: string, value: T, position?: string): void;
 }
 
-type NeosResponse = {
+export type GlobalNeos = {
     globalRegistry: Registry;
 }
 
-export const useNeos = (): NeosResponse => {
+export const useNeos = (): GlobalNeos => {
     return useContext(NeosContext);
 };

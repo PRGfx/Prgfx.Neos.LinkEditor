@@ -10,6 +10,17 @@ Neos:
           groups:
             default:
               label: Query Arguments
+          # This package provides a custom LinkEditor which allows editing linking options. You can disable this by
+          # setting the replace option to false
+          linkEditor:
+            replace: true
+            # Some linking options don't operate on the link string and don't make sense for the LinkEditor. They should
+            # never be enabled
+            ignoredOptions:
+              - title
+              - targetBlank
+              - relNoFollow
+              - download
     fusion:
       autoInclude:
         Prgfx.Neos.LinkEditor: true

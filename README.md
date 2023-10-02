@@ -79,3 +79,17 @@ Prgfx:
         UriBuilder: true
         ConvertUris: true
 ```
+
+## Note
+This package overwrites the default LinkEditor to allow passing additional linking options to enable the parameter editor in the inspector editor.
+You can disable this behavior in the settings:
+```yaml
+Neos:
+  Neos:
+    Ui:
+      frontendConfiguration:
+        Prgfx.Neos.LinkEditor:
+          linkEditor:
+            replace: false
+```
+See the package settings for more information
